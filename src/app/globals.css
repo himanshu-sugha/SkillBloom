@@ -1,0 +1,269 @@
+@import "tailwindcss";
+
+/* ===== SKILLBLOOM DESIGN SYSTEM ===== */
+
+:root {
+  /* Primary Colors - Spring/Growth Theme */
+  --primary-50: #f0fdf4;
+  --primary-100: #dcfce7;
+  --primary-200: #bbf7d0;
+  --primary-300: #86efac;
+  --primary-400: #4ade80;
+  --primary-500: #22c55e;
+  --primary-600: #16a34a;
+  --primary-700: #15803d;
+  --primary-800: #166534;
+  --primary-900: #14532d;
+
+  /* Accent Colors - Bloom/Flower Theme */
+  --accent-50: #fdf4ff;
+  --accent-100: #fae8ff;
+  --accent-200: #f5d0fe;
+  --accent-300: #f0abfc;
+  --accent-400: #e879f9;
+  --accent-500: #d946ef;
+  --accent-600: #c026d3;
+  --accent-700: #a21caf;
+  --accent-800: #86198f;
+  --accent-900: #701a75;
+
+  /* Warm Colors - Sun/Energy */
+  --warm-50: #fffbeb;
+  --warm-100: #fef3c7;
+  --warm-200: #fde68a;
+  --warm-300: #fcd34d;
+  --warm-400: #fbbf24;
+  --warm-500: #f59e0b;
+
+  /* Background & Surface */
+  --background: #0a0a0f;
+  --background-secondary: #111118;
+  --surface: #1a1a24;
+  --surface-hover: #252532;
+  --border: #2a2a3a;
+
+  /* Text Colors */
+  --foreground: #fafafa;
+  --foreground-secondary: #a1a1aa;
+  --foreground-muted: #71717a;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+/* ===== BASE STYLES ===== */
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  overflow-x: hidden;
+}
+
+/* ===== ANIMATED GRADIENT BACKGROUND ===== */
+.gradient-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: 
+    radial-gradient(ellipse at 20% 20%, rgba(34, 197, 94, 0.15) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 80%, rgba(217, 70, 239, 0.1) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(251, 191, 36, 0.05) 0%, transparent 50%),
+    var(--background);
+}
+
+/* ===== GLASSMORPHISM CARDS ===== */
+.glass-card {
+  background: rgba(26, 26, 36, 0.8);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 24px;
+  transition: all 0.3s ease;
+}
+
+.glass-card:hover {
+  background: rgba(37, 37, 50, 0.9);
+  border-color: rgba(34, 197, 94, 0.3);
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(34, 197, 94, 0.1);
+}
+
+/* ===== BUTTONS ===== */
+.btn-primary {
+  background: linear-gradient(135deg, var(--primary-500), var(--primary-600));
+  color: white;
+  padding: 14px 32px;
+  border-radius: 16px;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, var(--primary-400), var(--primary-500));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(34, 197, 94, 0.3);
+}
+
+.btn-primary:hover::before {
+  opacity: 1;
+}
+
+.btn-primary span {
+  position: relative;
+  z-index: 1;
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--foreground);
+  padding: 14px 32px;
+  border-radius: 16px;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  border: 1px solid var(--border);
+  cursor: pointer;
+}
+
+.btn-secondary:hover {
+  background: var(--surface);
+  border-color: var(--primary-500);
+  color: var(--primary-400);
+}
+
+/* ===== TEXT GRADIENTS ===== */
+.text-gradient {
+  background: linear-gradient(135deg, var(--primary-400), var(--accent-400));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-warm {
+  background: linear-gradient(135deg, var(--warm-400), var(--accent-500));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ===== SKILL PLANT CARDS ===== */
+.skill-card {
+  background: linear-gradient(145deg, rgba(26, 26, 36, 0.9), rgba(20, 83, 45, 0.3));
+  border: 1px solid rgba(34, 197, 94, 0.2);
+  border-radius: 20px;
+  padding: 24px;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.skill-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--primary-500), var(--accent-500));
+  transform: scaleX(0);
+  transition: transform 0.4s ease;
+}
+
+.skill-card:hover::before {
+  transform: scaleX(1);
+}
+
+.skill-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 
+    0 20px 40px rgba(34, 197, 94, 0.15),
+    0 0 60px rgba(217, 70, 239, 0.1);
+}
+
+/* ===== PROGRESS BAR ===== */
+.progress-bar {
+  background: var(--surface);
+  border-radius: 100px;
+  height: 8px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary-500), var(--accent-500));
+  border-radius: 100px;
+  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ===== FLOATING ANIMATION ===== */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+}
+
+.float {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* ===== GLOW EFFECTS ===== */
+.glow-green {
+  box-shadow: 0 0 40px rgba(34, 197, 94, 0.3);
+}
+
+.glow-purple {
+  box-shadow: 0 0 40px rgba(217, 70, 239, 0.3);
+}
+
+/* ===== PARTICLE EFFECT ===== */
+.particles {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--surface);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-600);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .glass-card {
+    border-radius: 16px;
+  }
+  
+  .btn-primary, .btn-secondary {
+    padding: 12px 24px;
+    font-size: 0.9rem;
+  }
+}
