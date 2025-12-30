@@ -312,28 +312,6 @@ export default function Home() {
           </motion.div>
         </div>
       </section>
-
-      {/* Footer */}
-      <footer className="py-12 px-6 border-t border-border">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center">
-              <Leaf className="w-5 h-5 text-white" />
-            </div>
-            <span className="font-semibold">SkillBloom</span>
-          </div>
-
-          <p className="text-foreground-muted text-sm">
-            Built with 💚 for CodeSpring Hackathon 2024
-          </p>
-
-          <div className="flex items-center gap-6 text-foreground-muted text-sm">
-            <Link href="/learn" className="hover:text-green-400 transition-colors">Learn</Link>
-            <Link href="/garden" className="hover:text-green-400 transition-colors">Garden</Link>
-            <Link href="/about" className="hover:text-green-400 transition-colors">About</Link>
-          </div>
-        </div>
-      </footer>
     </main>
   );
 }
