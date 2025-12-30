@@ -238,10 +238,20 @@ export default function OnboardingPage() {
                                             initial={{ opacity: 0, scale: 0.9 }}
                                             animate={{ opacity: 1, scale: 1 }}
                                             transition={{ delay: index * 0.05 }}
-                                            onClick={() => setFormData({ ...formData, skill: category.skills[0] })}
-                                            className={`p-4 rounded-xl border transition-all text-left ${category.skills.includes(formData.skill)
-                                                ? "bg-green-500/20 border-green-500"
-                                                : "bg-surface border-border hover:border-green-500/50"
+                                            onClick={() => {
+                                                // Set placeholder in input to guide user
+                                                const placeholder = category.skills[0];
+                                                setFormData({
+                                                    ...formData,
+                                                    skill: "",
+                                                    customSkill: placeholder
+                                                });
+                                            }}
+                                            className={`p-4 rounded-xl border transition-all text-left ${formData.customSkill && category.skills.some(s =>
+                                                formData.customSkill.toLowerCase().includes(s.toLowerCase().split(' ')[0])
+                                            )
+                                                    ? "bg-green-500/20 border-green-500"
+                                                    : "bg-surface border-border hover:border-green-500/50"
                                                 }`}
                                         >
                                             <div className="text-2xl mb-2">{category.emoji}</div>
@@ -255,7 +265,7 @@ export default function OnboardingPage() {
                                 <div className="relative">
                                     <input
                                         type="text"
-                                        placeholder="Or type your own skill..."
+                                        placeholder="Type what you want to learn (e.g., JavaScript, Python, React...)"
                                         value={formData.customSkill}
                                         onChange={(e) => setFormData({ ...formData, customSkill: e.target.value, skill: "" })}
                                         className="w-full p-4 rounded-xl bg-surface border border-border focus:border-green-500 focus:outline-none transition-colors"
