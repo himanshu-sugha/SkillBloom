@@ -82,8 +82,62 @@ export default function OnboardingPage() {
     };
 
     const handleComplete = () => {
+        // Extract skill from goal text if user mentioned a specific skill
+        const goalLower = formData.goal.toLowerCase();
+        const allSkills = skillCategories.flatMap(cat => cat.skills);
+
+        // Common skill aliases
+        const skillAliases: { [key: string]: string } = {
+            "js": "JavaScript",
+            "javascript": "JavaScript",
+            "python": "Python",
+            "react": "React",
+            "node": "Node.js",
+            "nodejs": "Node.js",
+            "sql": "SQL",
+            "typescript": "TypeScript",
+            "ts": "TypeScript",
+            "figma": "Figma",
+            "ui": "UI/UX",
+            "ux": "UI/UX",
+            "ml": "Machine Learning",
+            "ai": "Machine Learning",
+            "spanish": "Spanish",
+            "french": "French",
+            "german": "German",
+            "japanese": "Japanese",
+            "public speaking": "Public Speaking",
+            "presentation": "Presentation",
+            "leadership": "Leadership",
+        };
+
+        let detectedSkill = formData.skill || formData.customSkill;
+
+        // Check for skill mentions in goal
+        for (const [alias, skillName] of Object.entries(skillAliases)) {
+            if (goalLower.includes(alias)) {
+                detectedSkill = skillName;
+                break;
+            }
+        }
+
+        // Also check direct skill name mentions
+        for (const skillName of allSkills) {
+            if (goalLower.includes(skillName.toLowerCase())) {
+                detectedSkill = skillName;
+                break;
+            }
+        }
+
+        // Update formData with detected skill
+        const finalFormData = {
+            ...formData,
+            skill: detectedSkill,
+            customSkill: formData.customSkill || (detectedSkill !== formData.skill ? detectedSkill : "")
+        };
+
         // Store preferences in localStorage
-        localStorage.setItem("skillbloom_preferences", JSON.stringify(formData));
+        localStorage.setItem("skillbloom_preferences", JSON.stringify(finalFormData));
         router.push("/garden");
     };
 
@@ -110,8 +164,8 @@ export default function OnboardingPage() {
                             <div
                                 key={step.id}
                                 className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium transition-all ${index <= currentStep
-                                        ? "bg-green-500 text-white"
-                                        : "bg-surface text-foreground-muted"
+                                    ? "bg-green-500 text-white"
+                                    : "bg-surface text-foreground-muted"
                                     }`}
                             >
                                 {index + 1}
@@ -186,8 +240,8 @@ export default function OnboardingPage() {
                                             transition={{ delay: index * 0.05 }}
                                             onClick={() => setFormData({ ...formData, skill: category.skills[0] })}
                                             className={`p-4 rounded-xl border transition-all text-left ${category.skills.includes(formData.skill)
-                                                    ? "bg-green-500/20 border-green-500"
-                                                    : "bg-surface border-border hover:border-green-500/50"
+                                                ? "bg-green-500/20 border-green-500"
+                                                : "bg-surface border-border hover:border-green-500/50"
                                                 }`}
                                         >
                                             <div className="text-2xl mb-2">{category.emoji}</div>
@@ -235,8 +289,8 @@ export default function OnboardingPage() {
                                         transition={{ delay: index * 0.1 }}
                                         onClick={() => setFormData({ ...formData, timePerDay: option.value })}
                                         className={`p-6 rounded-xl border transition-all ${formData.timePerDay === option.value
-                                                ? "bg-green-500/20 border-green-500"
-                                                : "bg-surface border-border hover:border-green-500/50"
+                                            ? "bg-green-500/20 border-green-500"
+                                            : "bg-surface border-border hover:border-green-500/50"
                                             }`}
                                     >
                                         <option.icon className={`w-8 h-8 mb-3 ${formData.timePerDay === option.value ? "text-green-400" : "text-foreground-muted"
