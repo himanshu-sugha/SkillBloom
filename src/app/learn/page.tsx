@@ -258,7 +258,29 @@ function LearnContent() {
                                     <input
                                         type="text"
                                         value={skill}
-                                        onChange={(e) => setSkill(e.target.value)}
+                                        onChange={(e) => {
+                                            const newSkill = e.target.value;
+                                            setSkill(newSkill);
+
+                                            // Update localStorage to keep garden page in sync
+                                            const stored = localStorage.getItem("skillbloom_preferences");
+                                            if (stored) {
+                                                const prefs = JSON.parse(stored);
+                                                prefs.skill = newSkill;
+                                                prefs.customSkill = ""; // Clear custom if manually editing
+                                                localStorage.setItem("skillbloom_preferences", JSON.stringify(prefs));
+                                            }
+
+                                            // Also update the skills array if it exists
+                                            const storedSkills = localStorage.getItem("skillbloom_skills");
+                                            if (storedSkills) {
+                                                const skillsArray = JSON.parse(storedSkills);
+                                                if (skillsArray.length > 0) {
+                                                    skillsArray[0].name = newSkill; // Update the first skill
+                                                    localStorage.setItem("skillbloom_skills", JSON.stringify(skillsArray));
+                                                }
+                                            }
+                                        }}
                                         placeholder="e.g., Python, Public Speaking, Photography..."
                                         className="w-full p-4 rounded-xl bg-surface border border-border focus:border-green-500 focus:outline-none transition-colors"
                                     />
